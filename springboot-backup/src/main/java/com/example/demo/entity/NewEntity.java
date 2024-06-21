@@ -1,29 +1,27 @@
 package com.example.demo.entity;
 
-
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity  //connect database in mysql 
-@Table(name = "new") //mapping with table in database
-public class NewEntity extends BaseEntity{
-    @Column 
-    private String title;
-    @Column
-    private String thumbnail;
-    @Column
-    private String shortDescription;
-    @Column 
-    private String content;
+@Entity // connect database in mysql
+@Table(name = "new") // mapping with table in database
+public class NewEntity extends BaseEntity {
+	@Column
+	private String title;
+	@Column
+	private String thumbnail;
+	@Column
+	private String shortDescription;
+	@Column
+	private String content;
 	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private CategoryEntity category;
 
-    public CategoryEntity getCategory() {
+	public CategoryEntity getCategory() {
 		return category;
 	}
 
