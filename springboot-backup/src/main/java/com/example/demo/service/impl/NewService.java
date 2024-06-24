@@ -84,7 +84,7 @@ public class NewService implements INewService {
 			NewDTO newDTO = newConverter.toDTO(item);
 			results.add(newDTO);
 		}
-
+		System.out.println("results: " + results);
 		return results;
 	}
 
