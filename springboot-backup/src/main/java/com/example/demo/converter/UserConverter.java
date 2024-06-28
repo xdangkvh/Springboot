@@ -2,9 +2,9 @@ package com.example.demo.converter;
 
 import org.springframework.stereotype.Component;
 
-import com.example.demo.dto.NewDTO;
+// import com.example.demo.dto.NewDTO;
 import com.example.demo.dto.UserDTO;
-import com.example.demo.entity.NewEntity;
+// import com.example.demo.entity.NewEntity;
 import com.example.demo.entity.UserEntity;
 
 @Component
