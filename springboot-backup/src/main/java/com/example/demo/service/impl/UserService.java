@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.converter.UserConverter;
@@ -30,7 +32,9 @@ public class UserService implements IUserService {
         } else {
             userEntity = userConverter.toEntity(userDTO);
         }
-
+        int strength = 10;
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(strength);
+        userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userEntity = userRepository.save(userEntity);
         return userConverter.toDTO(userEntity);
     }

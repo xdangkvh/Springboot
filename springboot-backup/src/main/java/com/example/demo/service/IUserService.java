@@ -10,4 +10,6 @@ public interface IUserService {
     // void delete(Long id);
     // void delete(long[] ids);
     boolean delete(List<Long> ids);
+
+    // boolean authenticate(Authentication)
 }

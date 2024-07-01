@@ -1,10 +1,24 @@
 package com.example.demo.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.example.demo.entity.RoleEntity;
+
 public class UserDTO extends AbstractDTO<UserDTO> {
     private String userName;
     private String fullName;
     private String password;
     private Integer status;
+    private List<RoleEntity> role_id = new ArrayList<>();
+
+    public List<RoleEntity> getRole_id() {
+        return role_id;
+    }
+
+    public void setRole_id(List<RoleEntity> role_id) {
+        this.role_id = role_id;
+    }
 
     public String getUserName() {
         return userName;
