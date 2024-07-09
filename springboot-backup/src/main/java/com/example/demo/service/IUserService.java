@@ -7,7 +7,8 @@ import com.example.demo.dto.UserDTO;
 public interface IUserService {
     UserDTO save(UserDTO userDTO);
 
-    // void delete(Long id);
+    void delete(Long id);
+
     // void delete(long[] ids);
     boolean delete(List<Long> ids);
 

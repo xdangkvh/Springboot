@@ -32,11 +32,11 @@ public class UserAPI {
         return userService.save(model);
     }
 
-    // @DeleteMapping(value = "/user/{id}")
-    // public void deleteUser(@PathVariable("id") long id) {
-    // userService.delete(id);
+    @DeleteMapping(value = "/user/{id}")
+    public void deleteUser(@PathVariable("id") long id) {
+        userService.delete(id);
 
-    // }
+    }
 
     @DeleteMapping(value = "/user")
     public void deleteUser(@RequestBody List<Long> ids) {

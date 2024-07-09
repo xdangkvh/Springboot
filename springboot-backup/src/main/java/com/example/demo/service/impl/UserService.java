@@ -12,6 +12,7 @@ import com.example.demo.converter.UserConverter;
 
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.UserEntity;
+import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.IUserService;
 
@@ -25,6 +26,16 @@ public class UserService implements IUserService {
 
     @Override
     public UserDTO save(UserDTO userDTO) {
+        // Check if username already exists
+
+        if (userDTO == null) {
+            throw new IllegalArgumentException("UserDTO cannot be null");
+        }
+
+        // Check if username already exists
+        if (userRepository.existsByUserName(userDTO.getUserName())) {
+            throw new UserAlreadyExistsException("Username already exists");
+        }
         UserEntity userEntity = new UserEntity();
         if (userDTO.getId() != null) {
             UserEntity oldUserEntity = userRepository.findOneById(userDTO.getId());
@@ -38,11 +49,12 @@ public class UserService implements IUserService {
         userEntity = userRepository.save(userEntity);
         return userConverter.toDTO(userEntity);
     }
-    // @Override
-    // public void delete(Long id) {
-    // userRepository.deleteById(id);
 
-    // }
+    @Override
+    public void delete(Long id) {
+        userRepository.deleteById(id);
+
+    }
 
     // @Override
     // public void delete(long[] ids) {
