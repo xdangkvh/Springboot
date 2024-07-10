@@ -12,5 +12,10 @@ public interface IUserService {
     // void delete(long[] ids);
     boolean delete(List<Long> ids);
 
+    UserDTO getUserById(Long id);
+
+    List<UserDTO> getUsersByIds(List<Long> ids);
+
+    List<UserDTO> getAllUsers();
     // boolean authenticate(Authentication)
 }

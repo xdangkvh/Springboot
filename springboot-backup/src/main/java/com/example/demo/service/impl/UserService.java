@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -90,4 +91,30 @@ public class UserService implements IUserService {
     // userRepository.delete(item);
     // }
     // }
+
+    @Override
+    public UserDTO getUserById(Long id) {
+        UserEntity userEntity = userRepository.findOneById(id);
+        if (userEntity == null) {
+            throw new UsernameNotFoundException("User not found with ID: " + id);
+        }
+        return userConverter.toDTO(userEntity);
+    }
+
+    // New method to get multiple users by IDs
+    @Override
+    public List<UserDTO> getUsersByIds(List<Long> ids) {
+        List<UserEntity> userEntities = userRepository.findAllById(ids);
+        if (userEntities.isEmpty()) {
+            throw new UsernameNotFoundException("No users found with the given IDs");
+        }
+        return userEntities.stream().map(userConverter::toDTO).collect(Collectors.toList());
+    }
+
+    // New method to get all users
+    @Override
+    public List<UserDTO> getAllUsers() {
+        List<UserEntity> userEntities = userRepository.findAll();
+        return userEntities.stream().map(userConverter::toDTO).collect(Collectors.toList());
+    }
 }

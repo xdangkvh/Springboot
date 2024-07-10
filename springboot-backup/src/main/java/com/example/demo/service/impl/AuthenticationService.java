@@ -5,22 +5,17 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-import org.aspectj.weaver.patterns.ParserException;
-// import org.hibernate.mapping.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-// import com.example.demo.converter.UserConverter;
-// import com.example.demo.dto.AuthenticationRequest;
-// import com.example.demo.dto.AuthenticationRequest;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.request.IntrospectRequest;
 import com.example.demo.dto.response.IntrospectResponse;
 import com.example.demo.entity.UserEntity;
-// import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.service.IAuthenticationService;
 import com.nimbusds.jose.JOSEException;
 import com.nimbusds.jose.JWSAlgorithm;
 import com.nimbusds.jose.JWSHeader;
@@ -40,7 +35,7 @@ import lombok.experimental.NonFinal;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class AuthenticationService {
+public class AuthenticationService implements IAuthenticationService {
     @Autowired
     UserRepository userRepository;
     @NonFinal
@@ -48,7 +43,7 @@ public class AuthenticationService {
 
     // @Autowired
     // private UserConverter userConverter;
-
+    @Override
     public IntrospectResponse introspect(IntrospectRequest request)
             throws JOSEException, ParseException {
         var token = request.getToken();
@@ -67,11 +62,12 @@ public class AuthenticationService {
 
     }
 
+    @Override
     public String authenticate(UserDTO request) {
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        System.out.println(request.getUserName());
-        System.out.println(userRepository.findByUserName(request.getUserName()));
+        // System.out.println(request.getUserName());
+        // System.out.println(userRepository.findByUserName(request.getUserName()));
         if (userRepository.findByUserName(request.getUserName()) == null) {
             return "user not foud";
         } else {

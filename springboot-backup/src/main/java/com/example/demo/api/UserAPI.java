@@ -3,8 +3,12 @@ package com.example.demo.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +24,32 @@ import com.example.demo.service.IUserService;
 public class UserAPI {
     @Autowired
     private IUserService userService;
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        try {
+            UserDTO userDTO = userService.getUserById(id);
+            return new ResponseEntity<>(userDTO, HttpStatus.OK);
+        } catch (UsernameNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/users")
+    public ResponseEntity<List<UserDTO>> getUsersByIds(@RequestBody List<Long> ids) {
+        try {
+            List<UserDTO> userDTOs = userService.getUsersByIds(ids);
+            return new ResponseEntity<>(userDTOs, HttpStatus.OK);
+        } catch (UsernameNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value = "/allUsers")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        List<UserDTO> userDTOs = userService.getAllUsers();
+        return new ResponseEntity<>(userDTOs, HttpStatus.OK);
+    }
 
     @PostMapping(value = "/user") // PostMapping = method POST + RequestMapping
     public UserDTO createUser(@RequestBody UserDTO model) {
