@@ -6,6 +6,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -73,8 +74,11 @@ public class AuthenticationService implements IAuthenticationService {
         } else {
             // UserDTO userDTO = new UserDTO();
             // String passWordRequest = passwordEncoder.encode(request.getPassword());
-            UserEntity userEntity = new UserEntity();
-            userEntity = userRepository.findByUserName(request.getUserName());
+            // UserEntity userEntity = new UserEntity();
+            // userEntity = userRepository.findByUserName(request.getUserName());
+
+            UserEntity userEntity = userRepository.findByUserName(request.getUserName())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found"));
             if (passwordEncoder.matches(request.getPassword(), userEntity.getPassword())) {
                 var token = generateToken(request.getUserName());
                 return token;

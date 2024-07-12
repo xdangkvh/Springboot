@@ -21,7 +21,7 @@ public interface IUserService {
     List<UserDTO> getAllUsers();
     // boolean authenticate(Authentication)
 
-    void addRoleToUser(Long idUser, Long idRole);
+    void addRoleToUser(String userName, String roleName);
 
     UserEntity loadUserById(Long id);
 }

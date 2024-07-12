@@ -57,10 +57,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void addRoleToUser(Long idUser, Long idRole) {
-        UserEntity user = userRepository.findById(idUser)
+    public void addRoleToUser(String userName, String roleName) {
+        if (userName == null || roleName == null) {
+            throw new IllegalArgumentException("Username or roleName cannot be null");
+        }
+        UserEntity user = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        RoleEntity role = roleRepository.findById(idRole)
+        RoleEntity role = roleRepository.findByName(roleName)
                 .orElseThrow(() -> new RuntimeException("Role not found"));
 
         user.getRoles().add(role);

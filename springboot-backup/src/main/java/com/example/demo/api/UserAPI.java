@@ -65,7 +65,7 @@ public class UserAPI {
 
     // insert role user
     @PostMapping(value = "/users/{idUser}/roles/{idRole}")
-    public ResponseEntity<?> addRoleToUser(@PathVariable Long idUser, @PathVariable Long idRole) {
+    public ResponseEntity<?> addRoleToUser(@PathVariable String idUser, @PathVariable String idRole) {
         userService.addRoleToUser(idUser, idRole);
         return ResponseEntity.ok().build();
     }
