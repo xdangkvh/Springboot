@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
 import java.util.List;
+// import java.util.Optional;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.entity.UserEntity;
 
 public interface IUserService {
     UserDTO save(UserDTO userDTO);
@@ -18,4 +20,8 @@ public interface IUserService {
 
     List<UserDTO> getAllUsers();
     // boolean authenticate(Authentication)
+
+    void addRoleToUser(Long idUser, Long idRole);
+
+    UserEntity loadUserById(Long id);
 }

@@ -1,9 +1,12 @@
 package com.example.demo.converter;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
 import com.example.demo.dto.UserDTO;
-
+import com.example.demo.entity.RoleEntity;
 // import com.example.demo.entity.NewEntity;
 import com.example.demo.entity.UserEntity;
 
@@ -33,6 +36,13 @@ public class UserConverter {
         dto.setCreatedBy(entity.getCreatedBy());
         dto.setModifiedDate(entity.getModifiedDate());
         dto.setModifiedBy(entity.getModifiedBy());
+
+        // Lấy danh sách roleIds từ các RoleEntity
+        List<Long> roleIds = entity.getRoles().stream()
+                .map(RoleEntity::getId)
+                .collect(Collectors.toList());
+        dto.setRoleIds(roleIds);
+
         return dto;
     }
 

@@ -3,7 +3,6 @@ package com.example.demo.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -11,9 +10,9 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
-@Entity //create object in spring to connect to database mysql 
-@Table(name = "user") //create table in database
-public class UserEntity extends BaseEntity{
+@Entity // create object in spring to connect to database mysql
+@Table(name = "user") // create table in database
+public class UserEntity extends BaseEntity {
 
     @Column
     private String userName;
@@ -23,41 +22,40 @@ public class UserEntity extends BaseEntity{
     private String fullName;
     @Column
     private Integer status;
-    
+
     @ManyToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<RoleEntity> roles = new ArrayList<> ();
-    
-    
-    public String getUserName(){
+    private List<RoleEntity> roles = new ArrayList<>();
+
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName){
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password){
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getFullName(){
+    public String getFullName() {
         return fullName;
     }
 
-    public void setFullName(String fullName){
+    public void setFullName(String fullName) {
         this.fullName = fullName;
     }
 
-    public Integer getStatus(){
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status){
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -68,7 +66,5 @@ public class UserEntity extends BaseEntity{
     public void setRoles(List<RoleEntity> roles) {
         this.roles = roles;
     }
-
-
 
 }

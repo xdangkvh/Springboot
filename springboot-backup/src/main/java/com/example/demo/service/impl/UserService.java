@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import com.example.demo.converter.UserConverter;
 
 import com.example.demo.dto.UserDTO;
+import com.example.demo.entity.RoleEntity;
 import com.example.demo.entity.UserEntity;
 import com.example.demo.exception.UserAlreadyExistsException;
+import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.IUserService;
 
@@ -24,6 +26,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserConverter userConverter;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Override
     public UserDTO save(UserDTO userDTO) {
@@ -49,6 +54,23 @@ public class UserService implements IUserService {
         userEntity.setPassword(passwordEncoder.encode(userDTO.getPassword()));
         userEntity = userRepository.save(userEntity);
         return userConverter.toDTO(userEntity);
+    }
+
+    @Override
+    public void addRoleToUser(Long idUser, Long idRole) {
+        UserEntity user = userRepository.findById(idUser)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+        RoleEntity role = roleRepository.findById(idRole)
+                .orElseThrow(() -> new RuntimeException("Role not found"));
+
+        user.getRoles().add(role);
+        userRepository.save(user);
+    }
+
+    @Override
+    public UserEntity loadUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     @Override
@@ -98,6 +120,7 @@ public class UserService implements IUserService {
         if (userEntity == null) {
             throw new UsernameNotFoundException("User not found with ID: " + id);
         }
+        userEntity.getRoles().size(); // Force loading of roles
         return userConverter.toDTO(userEntity);
     }
 
