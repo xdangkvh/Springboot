@@ -9,7 +9,21 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
+import lombok.AccessLevel;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Builder
 @Entity // create object in spring to connect to database mysql
 @Table(name = "user") // create table in database
 public class UserEntity extends BaseEntity {
@@ -25,6 +39,7 @@ public class UserEntity extends BaseEntity {
 
     @ManyToMany
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Builder.Default
     private List<RoleEntity> roles = new ArrayList<>();
 
     public String getUserName() {

@@ -14,7 +14,9 @@ import com.example.demo.converter.UserConverter;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.RoleEntity;
 import com.example.demo.entity.UserEntity;
-import com.example.demo.exception.UserAlreadyExistsException;
+import com.example.demo.exception.AppException;
+import com.example.demo.exception.Error;
+// import com.example.demo.exception.UserAlreadyExistsException;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.IUserService;
@@ -40,7 +42,7 @@ public class UserService implements IUserService {
 
         // Check if username already exists
         if (userRepository.existsByUserName(userDTO.getUserName())) {
-            throw new UserAlreadyExistsException("Username already exists");
+            throw new AppException(Error.USER_EXISTED);
         }
         UserEntity userEntity = new UserEntity();
         if (userDTO.getId() != null) {
@@ -121,7 +123,7 @@ public class UserService implements IUserService {
     public UserDTO getUserById(Long id) {
         UserEntity userEntity = userRepository.findOneById(id);
         if (userEntity == null) {
-            throw new UsernameNotFoundException("User not found with ID: " + id);
+            throw new AppException(Error.USER_NOT_EXISTED);
         }
         userEntity.getRoles().size(); // Force loading of roles
         return userConverter.toDTO(userEntity);
