@@ -15,6 +15,8 @@ import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.request.IntrospectRequest;
 import com.example.demo.dto.response.IntrospectResponse;
 import com.example.demo.entity.UserEntity;
+import com.example.demo.exception.AppException;
+import com.example.demo.exception.Error;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.IAuthenticationService;
 import com.nimbusds.jose.JOSEException;
@@ -69,8 +71,11 @@ public class AuthenticationService implements IAuthenticationService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         // System.out.println(request.getUserName());
         // System.out.println(userRepository.findByUserName(request.getUserName()));
+        var user = userRepository
+                .findByUserName(request.getUserName())
+                .orElseThrow(() -> new AppException(Error.USER_NOT_EXISTED));
         if (userRepository.findByUserName(request.getUserName()) == null) {
-            return "user not foud";
+            throw new AppException(Error.USER_NOT_EXISTED);
         } else {
             // UserDTO userDTO = new UserDTO();
             // String passWordRequest = passwordEncoder.encode(request.getPassword());
@@ -84,7 +89,7 @@ public class AuthenticationService implements IAuthenticationService {
                 return token;
 
             } else {
-                return "password incorrect";
+                throw new AppException(Error.UNAUTHENTICATED);
             }
         }
     }

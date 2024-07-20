@@ -30,7 +30,7 @@ public class UserConverter {
         }
         dto.setUserName(entity.getUserName());
         dto.setFullName(entity.getFullName());
-        dto.setPassword(entity.getPassword());
+        // dto.setPassword(entity.getPassword());
         dto.setStatus(entity.getStatus());
         dto.setCreatedDate(entity.getCreatedDate());
         dto.setCreatedBy(entity.getCreatedBy());

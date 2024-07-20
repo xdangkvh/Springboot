@@ -3,14 +3,14 @@ package com.example.demo.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// import javax.management.relation.Role;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.example.demo.converter.UserConverter;
-
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.RoleEntity;
 import com.example.demo.entity.UserEntity;

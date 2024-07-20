@@ -67,9 +67,4 @@ public class UserEntity extends BaseEntity {
         this.roles = roles;
     }
 
-    public UserEntity orElseThrow(Object object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'orElseThrow'");
-    }
-
 }
