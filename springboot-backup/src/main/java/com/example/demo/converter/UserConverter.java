@@ -1,10 +1,12 @@
 package com.example.demo.converter;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import com.example.demo.dto.RoleDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.RoleEntity;
 // import com.example.demo.entity.NewEntity;
@@ -12,6 +14,7 @@ import com.example.demo.entity.UserEntity;
 
 @Component
 public class UserConverter {
+    private RoleConverter roleConverter = new RoleConverter();
 
     public UserEntity toEntity(UserDTO dto) {
         UserEntity entity = new UserEntity();
@@ -19,6 +22,8 @@ public class UserConverter {
         entity.setFullName(dto.getFullName());
         entity.setPassword(dto.getPassword());
         entity.setStatus(dto.getStatus());
+        entity.setRoles(toRoleEntitySet(dto.getRoles()));
+        // entity.setRoles();
         // entity.setRoles(dto.getRole_id());
         return entity;
     }
@@ -36,14 +41,21 @@ public class UserConverter {
         dto.setCreatedBy(entity.getCreatedBy());
         dto.setModifiedDate(entity.getModifiedDate());
         dto.setModifiedBy(entity.getModifiedBy());
-
-        // Lấy danh sách roleIds từ các RoleEntity
-        List<Long> roleIds = entity.getRoles().stream()
-                .map(RoleEntity::getId)
-                .collect(Collectors.toList());
-        dto.setRoleIds(roleIds);
+        dto.setRoles(toRoleDTOSet(entity.getRoles()));
 
         return dto;
+    }
+
+    private Set<RoleEntity> toRoleEntitySet(Set<RoleDTO> roleDTOs) {
+        return roleDTOs.stream()
+                .map(roleConverter::toEntity)
+                .collect(Collectors.toSet());
+    }
+
+    private Set<RoleDTO> toRoleDTOSet(Set<RoleEntity> roleEntities) {
+        return roleEntities.stream()
+                .map(roleConverter::toDTO)
+                .collect(Collectors.toSet());
     }
 
     public UserEntity toEntity(UserDTO dto, UserEntity entity) {
@@ -51,6 +63,7 @@ public class UserConverter {
         entity.setFullName(dto.getFullName());
         entity.setPassword(dto.getPassword());
         entity.setStatus(dto.getStatus());
+        entity.setRoles(toRoleEntitySet(dto.getRoles()));
         return entity;
     }
 }

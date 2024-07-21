@@ -1,7 +1,7 @@
 package com.example.demo.configuration;
 
-import java.util.Collections;
 // import java.util.HashSet;
+import java.util.HashSet;
 
 // import javax.print.attribute.HashAttributeSet;
 
@@ -53,13 +53,14 @@ public class ApplicationInitConfig {
                         .name(PredefinedRole.ADMIN_ROLE)
                         .build());
 
-                // var roles = new HashSet<Role>();
-                // roles.add(adminRole);
+                var roles = new HashSet<RoleEntity>();
+                roles.add(adminRole);
 
                 UserEntity user = UserEntity.builder()
                         .userName(ADMIN_USER_NAME)
                         .password(passwordEncoder.encode(ADMIN_PASSWORD))
-                        .roles(Collections.singletonList(adminRole))
+                        // .roles(Collections.singletonList(adminRole))
+                        .roles(roles)
                         .build();
 
                 userRepository.save(user);

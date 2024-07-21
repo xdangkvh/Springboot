@@ -64,9 +64,9 @@ public class UserService implements IUserService {
             throw new IllegalArgumentException("Username or roleName cannot be null");
         }
         UserEntity user = userRepository.findByUserName(userName)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new AppException(Error.USER_NOT_EXISTED));
         RoleEntity role = roleRepository.findByName(roleName)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+                .orElseThrow(() -> new AppException(Error.UNAUTHORIZED));
 
         user.getRoles().add(role);
         userRepository.save(user);

@@ -1,14 +1,11 @@
 package com.example.demo.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.example.demo.entity.UserEntity;
+import java.util.Set;
 
 public class RoleDTO extends AbstractDTO<RoleDTO> {
     private String code;
     private String name;
-    private List<UserEntity> user_id = new ArrayList<>();
+    private Set<PermissionDTO> permissions;
 
     public String getCode() {
         return code;
@@ -26,12 +23,12 @@ public class RoleDTO extends AbstractDTO<RoleDTO> {
         this.name = name;
     }
 
-    public List<UserEntity> getUser_id() {
-        return user_id;
+    public Set<PermissionDTO> getPermissions() {
+        return permissions;
     }
 
-    public void setUser_id(List<UserEntity> user_id) {
-        this.user_id = user_id;
+    public void setPermissions(Set<PermissionDTO> permissions) {
+        this.permissions = permissions;
     }
 
 }

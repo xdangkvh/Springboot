@@ -1,7 +1,8 @@
 package com.example.demo.dto;
 
 // import java.util.ArrayList;
-import java.util.List;
+
+import java.util.Set;
 
 // import com.example.demo.entity.RoleEntity;
 
@@ -10,14 +11,14 @@ public class UserDTO extends AbstractDTO<UserDTO> {
     private String fullName;
     private String password;
     private Integer status;
-    private List<Long> roleIds;
+    private Set<RoleDTO> roles;
 
-    public List<Long> getRoleIds() {
-        return roleIds;
+    public Set<RoleDTO> getRoles() {
+        return roles;
     }
 
-    public void setRoleIds(List<Long> roleIds) {
-        this.roleIds = roleIds;
+    public void setRoles(Set<RoleDTO> roles) {
+        this.roles = roles;
     }
 
     public String getUserName() {
